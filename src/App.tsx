@@ -10,6 +10,7 @@ import Disco from './pages/Disco';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Disclaimer from './pages/Disclaimer';
 import Terms from './pages/Terms';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -19,11 +20,7 @@ export default function App() {
       <Route path="/disclaimer" component={Disclaimer} />
       <Route path="/terms-and-conditions" component={Terms} />
       <Route path="/:disco" component={Disco} />
-      <Route path="*">
-        {() => (
-          typeof window !== 'undefined' && window.location.replace('/')
-        )}
-      </Route>
+      <Route path="*" component={NotFound} />
     </Switch>
   );
 }

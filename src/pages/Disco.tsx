@@ -5,6 +5,7 @@ import { useParams, Link, Redirect } from 'wouter';
 import Layout from '../components/Layout';
 import BillChecker from '../components/BillChecker';
 import { DISCO_DATA, DiscoInfo } from '../content/discoData';
+import { useSEO } from '../hooks/useSEO';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 export default function Disco() {
@@ -12,11 +13,15 @@ export default function Disco() {
   const disco = params?.disco;
   const [discoInfo, setDiscoInfo] = useState<DiscoInfo | null>(null);
 
+  useSEO({
+    title: discoInfo ? `${discoInfo.name} online bill check | check by reference number` : "online bill check | check by reference number",
+    description: discoInfo ? `Check your duplicate ${discoInfo.fullName} (${discoInfo.name}) electricity bill online. Get your latest WAPDA bill for ${discoInfo.name} easily and securely.` : "Check your duplicate WAPDA electricity bill online.",
+    canonical: discoInfo ? `https://www.wapdaonlinebillcheck.com/${discoInfo.id}` : undefined
+  });
+
   useEffect(() => {
     if (disco && DISCO_DATA[disco]) {
       setDiscoInfo(DISCO_DATA[disco]);
-      // Update document title for SEO
-      document.title = `Check ${DISCO_DATA[disco].name} Online Bill - Duplicate Bill Copy`;
     }
   }, [disco]);
 
@@ -63,7 +68,7 @@ export default function Disco() {
               Official {discoInfo.name} Portal
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
-              Check <span className="text-emerald-600">{discoInfo.name}</span> Online Bill.
+              {discoInfo.name} <span className="text-emerald-600">Online Bill Check</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-500 mb-10 leading-relaxed font-medium">
               {discoInfo.shortDescription}

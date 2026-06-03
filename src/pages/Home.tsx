@@ -5,8 +5,15 @@ import Layout from '../components/Layout';
 import BillChecker from '../components/BillChecker';
 import { getAllDiscos } from '../content/discoData';
 import { Link } from 'wouter';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Home() {
+  useSEO({
+    title: "Electricity Bill Online Check | WAPDA Duplicate Bills Pakistan",
+    description: "Check and download your duplicate WAPDA electricity bill online in Pakistan. Support for LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HAZECO, and HESCO 2026.",
+    canonical: "https://www.wapdaonlinebillcheck.com/"
+  });
+
   const globalFaqs = [
     {
       question: "How to Check WAPDA Bill Online?",
@@ -48,64 +55,18 @@ export default function Home() {
       
       <div className="p-4 md:p-8 gap-8 w-full max-w-7xl mx-auto flex flex-col">
         {/* Main Interface Section */}
-        <section className="flex flex-col xl:flex-row gap-8">
-          <div className="flex-1 xl:flex-[1.2] flex flex-col pt-4 md:pt-8 w-full order-2 xl:order-1">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight mb-8 text-center xl:text-left leading-tight hidden xl:block">
-              Online <span className="text-emerald-600">Duplicate Bill</span> Check.
-            </h1>
+        <section className="flex flex-col gap-8 max-w-4xl mx-auto w-full">
+          <div className="flex flex-col pt-4 md:pt-8 w-full">
+            <div className="text-center mb-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                Electricity Bill <span className="text-emerald-600">Online Check</span>
+              </h1>
+              <p className="mt-4 text-lg text-slate-600 font-medium">
+                Select your provider and fetch your electricity bill instantly from official servers.
+              </p>
+            </div>
             <BillChecker initialDisco="iesco" />
           </div>
-
-          {/* Quick Guide Sidebar (Visible Desktop/Tablet) */}
-          <aside className="xl:flex-1 flex flex-col gap-6 order-1 xl:order-2">
-            <div className="xl:hidden text-center max-w-2xl mx-auto pt-6">
-              <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Online <span className="text-emerald-600">Duplicate Bill</span> Check.
-              </h1>
-            </div>
-            
-            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xl flex flex-col gap-4">
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-widest border-l-4 border-emerald-500 pl-3">Supported Providers</h3>
-              <div className="space-y-3">
-                {getAllDiscos().slice(0, 3).map(disco => (
-                  <div key={disco.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-                    <span className="text-sm font-semibold text-slate-800">{disco.name}</span>
-                    <span className="text-xs text-slate-500 line-clamp-1 truncate max-w-[150px]">{disco.jurisdiction}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="text-center pt-2">
-                <span className="text-xs font-medium text-emerald-600">All Pakistan DISCOs Supported</span>
-              </div>
-            </div>
-
-            <div className="bg-slate-900 text-white rounded-3xl p-6 md:p-8 flex-1 flex flex-col justify-between shadow-xl">
-               <div className="space-y-5">
-                 <h3 className="text-xl font-bold tracking-tight">How to Check?</h3>
-                 <div className="space-y-4">
-                    <div className="flex gap-4">
-                       <div className="w-6 h-6 rounded-full bg-emerald-500 text-[10px] flex items-center justify-center font-bold shrink-0 mt-0.5">01</div>
-                       <p className="text-sm text-slate-300">Select your provider (e.g. LESCO, IESCO).</p>
-                    </div>
-                    <div className="flex gap-4">
-                       <div className="w-6 h-6 rounded-full bg-emerald-500 text-[10px] flex items-center justify-center font-bold shrink-0 mt-0.5">02</div>
-                       <p className="text-sm text-slate-300">Click 'Load Portal' to open the provider's billing site.</p>
-                    </div>
-                    <div className="flex gap-4">
-                       <div className="w-6 h-6 rounded-full bg-emerald-500 text-[10px] flex items-center justify-center font-bold shrink-0 mt-0.5">03</div>
-                       <p className="text-sm text-slate-300">Enter your 14-digit reference number there to view the PDF.</p>
-                    </div>
-                 </div>
-               </div>
-               <div className="pt-6 mt-6 border-t border-slate-800">
-                  <div className="flex items-center gap-2 mb-2">
-                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Live Status</span>
-                  </div>
-                  <p className="text-xs text-slate-400 italic font-medium">Data fetching from official servers is currently operational.</p>
-               </div>
-            </div>
-          </aside>
         </section>
 
         {/* SEO Rich Content Areas */}

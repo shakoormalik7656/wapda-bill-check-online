@@ -47,9 +47,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
-            <button className="bg-slate-900 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md">Support Portal</button>
-          </div>
         </div>
       </header>
 
@@ -106,14 +103,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-200 text-xs text-slate-500 font-medium flex flex-col md:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} WAPDA Online Bill Check. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy-policy" className="hover:text-emerald-600 transition-colors">Privacy</Link>
-            <Link href="/terms-and-conditions" className="hover:text-emerald-600 transition-colors">Terms</Link>
-            <div className="flex items-center gap-2 border-l border-slate-300 pl-6">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Secure SSL
-            </div>
-          </div>
+          
         </div>
       </footer>
     </div>

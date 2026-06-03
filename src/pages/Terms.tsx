@@ -1,7 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Terms() {
+  useSEO({
+    title: "Terms and Conditions | WAPDA Online Bill Check",
+    description: "Read the Terms and Conditions of using WAPDA Online Bill Check. Learn about your rights, obligations, and limitations when using our utility tool.",
+    canonical: "https://www.wapdaonlinebillcheck.com/terms-and-conditions"
+  });
+
   return (
     <Layout>
       <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 w-full">

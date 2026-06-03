@@ -1,8 +1,15 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import { Info } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 export default function Disclaimer() {
+  useSEO({
+    title: "Disclaimer | WAPDA Online Bill Check",
+    description: "Important disclaimer regarding using WAPDA Online Bill Check. We are an independent directory tool and not affiliated with any official Pakistani electricity company.",
+    canonical: "https://www.wapdaonlinebillcheck.com/disclaimer"
+  });
+
   return (
     <Layout>
       <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 w-full">

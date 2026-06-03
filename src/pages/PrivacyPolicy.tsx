@@ -1,7 +1,14 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import { useSEO } from '../hooks/useSEO';
 
 export default function PrivacyPolicy() {
+  useSEO({
+    title: "Privacy Policy | WAPDA Online Bill Check",
+    description: "Read the comprehensive Privacy Policy for WAPDA Online Bill Check. We safely redirect to official servers and do not collect personal information.",
+    canonical: "https://www.wapdaonlinebillcheck.com/privacy-policy"
+  });
+
   return (
     <Layout>
       <div className="max-w-4xl mx-auto px-4 py-16 sm:px-6 lg:px-8 w-full">
