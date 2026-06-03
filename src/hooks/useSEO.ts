@@ -23,8 +23,8 @@ export function useSEO({ title, description, canonical }: SEOProps) {
     }
 
     // Update Canonical
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonical) {
-      let canonicalLink = document.querySelector('link[rel="canonical"]');
       if (canonicalLink) {
         canonicalLink.setAttribute('href', canonical);
       } else {
@@ -33,6 +33,8 @@ export function useSEO({ title, description, canonical }: SEOProps) {
         canonicalLink.setAttribute('href', canonical);
         document.head.appendChild(canonicalLink);
       }
+    } else if (canonicalLink) {
+      canonicalLink.remove();
     }
   }, [title, description, canonical]);
 }
