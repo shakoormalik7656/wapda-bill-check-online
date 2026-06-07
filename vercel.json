@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/check-bill.ts": { "maxDuration": 60 }
+    "api/check-bill.ts": { "maxDuration": 60, "regions": ["sin1", "bom1"] }
   },
   "headers": [
     {
