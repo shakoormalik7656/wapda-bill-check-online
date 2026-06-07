@@ -47,7 +47,7 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
 
   const targetUrl = currentDisco
     ? (cleanRef.length >= 10
-        ? `${currentDisco.urlPrefix}/general?refno=${cleanRef}`
+        ? `/api/check-bill?disco=${currentDisco.id}&refno=${cleanRef}`
         : currentDisco.urlPrefix)
     : `https://bill.pitc.com.pk/${provider}bill`;
 
