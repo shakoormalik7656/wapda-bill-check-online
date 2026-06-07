@@ -45,12 +45,9 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
   const currentDisco = getAllDiscos().find(d => d.id === provider);
   const cleanRef = refNumber.replace(/\D/g, "");
 
-  // When a reference number is present, route through the server-side proxy
-  // so PITC's POST + session cookie handshake happens transparently.
-  // Without the proxy, PITC ignores the GET ?refno= param and shows its homepage.
   const targetUrl = currentDisco
     ? (cleanRef.length >= 10
-        ? `/api/check-bill?disco=${currentDisco.id}&refno=${cleanRef}`
+        ? `${currentDisco.urlPrefix}/general?refno=${cleanRef}`
         : currentDisco.urlPrefix)
     : `https://bill.pitc.com.pk/${provider}bill`;
 
