@@ -1,6 +1,0 @@
-{
-  "name": "WAPDA Online Bill Check",
-  "description": "A hyper-fast utility website for Pakistani consumers to check, download, and print their WAPDA duplicate electricity bills using a 14-digit reference number.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
