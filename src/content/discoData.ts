@@ -193,6 +193,75 @@ export const DISCO_DATA: Record<string, DiscoInfo> = {
         answer: "By entering your 14-digit reference number, the portal fetches your latest HESCO online bill. Previous month totals are usually summarized inside the loaded bill."
       }
     ]
+  },
+  sepco: {
+    id: "sepco",
+    name: "SEPCO",
+    fullName: "Sukkur Electric Power Company",
+    prefix: "sepco",
+    urlPrefix: "https://bill.pitc.com.pk/sepcobill",
+    jurisdiction: "Sukkur, Larkana, Jacobabad, Shikarpur, Khairpur, Ghotki, Kashmor, and surrounding upper Sindh regions",
+    shortDescription: "Check your SEPCO online bill for 2026 instantly. Enter your 14-digit reference number to view and download your Sukkur Electric Power Company duplicate electricity bill. Free, fast, and official.",
+    faqs: [
+      {
+        question: "How do I check my SEPCO bill online?",
+        answer: "Select SEPCO from the provider dropdown, enter your 14-digit reference number, and click 'Get Bill' to instantly retrieve your Sukkur Electric Power Company duplicate bill."
+      },
+      {
+        question: "Which areas does SEPCO supply electricity to?",
+        answer: "SEPCO (Sukkur Electric Power Company) distributes electricity to Sukkur, Larkana, Jacobabad, Shikarpur, Khairpur, Ghotki, Kashmor, and the surrounding upper Sindh districts."
+      },
+      {
+        question: "Can I download my SEPCO duplicate bill as a PDF?",
+        answer: "Yes. Once your SEPCO duplicate bill loads via our portal, use your browser's print function (Ctrl+P) and select 'Save as PDF' to keep a digital copy for bank payments or records."
+      }
+    ]
+  },
+  qesco: {
+    id: "qesco",
+    name: "QESCO",
+    fullName: "Quetta Electric Supply Company",
+    prefix: "qesco",
+    urlPrefix: "https://bill.pitc.com.pk/qescobill",
+    jurisdiction: "Quetta, Gwadar, Sibi, Zhob, Turbat, Khuzdar, Chaman, and surrounding Balochistan regions",
+    shortDescription: "QESCO online bill check 2026. View and download your Quetta Electric Supply Company duplicate electricity bill in seconds. Enter your 14-digit reference number for an instant WAPDA bill check.",
+    faqs: [
+      {
+        question: "How can I perform a QESCO online bill check?",
+        answer: "Enter your 14-digit QESCO reference number in our bill checker and click 'Get Bill'. Your official duplicate bill from the PITC portal will be ready in seconds."
+      },
+      {
+        question: "What areas fall under QESCO jurisdiction?",
+        answer: "QESCO (Quetta Electric Supply Company) covers electricity distribution across Balochistan, including Quetta, Gwadar, Sibi, Zhob, Turbat, Khuzdar, and Chaman."
+      },
+      {
+        question: "Is QESCO bill check online free?",
+        answer: "Yes. Checking your QESCO duplicate electricity bill through our platform is completely free. No registration or account is required — just your 14-digit reference number."
+      }
+    ]
+  },
+  tesco: {
+    id: "tesco",
+    name: "TESCO",
+    fullName: "Tribal Electric Supply Company",
+    prefix: "tesco",
+    urlPrefix: "https://bill.pitc.com.pk/tescobill",
+    jurisdiction: "Tribal districts of Khyber Pakhtunkhwa including Khyber, Bajaur, Mohmand, Kurram, North Waziristan, South Waziristan, and Orakzai",
+    shortDescription: "TESCO online bill check 2026. Check and download your Tribal Electric Supply Company duplicate electricity bill instantly. Use your 14-digit reference number for a secure WAPDA bill check.",
+    faqs: [
+      {
+        question: "How do I check my TESCO electricity bill online?",
+        answer: "Select TESCO from the provider list, enter your 14-digit reference number, and click 'Get Bill' to load your official Tribal Electric Supply Company duplicate bill."
+      },
+      {
+        question: "Which tribal districts does TESCO serve?",
+        answer: "TESCO (Tribal Electric Supply Company) provides electricity distribution to the merged tribal districts of KPK, including Khyber, Bajaur, Mohmand, Kurram, North Waziristan, South Waziristan, and Orakzai."
+      },
+      {
+        question: "Where is my TESCO 14-digit reference number?",
+        answer: "Your 14-digit TESCO reference number is printed at the top of any previous physical electricity bill. It is the primary key needed to fetch your duplicate bill online."
+      }
+    ]
   }
 };
 
