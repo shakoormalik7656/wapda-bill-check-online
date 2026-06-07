@@ -45,12 +45,10 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
   const currentDisco = getAllDiscos().find(d => d.id === provider);
   const cleanRef = refNumber.replace(/\D/g, "");
 
-  // VITE_PROXY_URL is set to the Cloudflare Worker URL in production.
-  // Falls back to the Vercel serverless function locally / during migration.
-  const proxyBase = (import.meta.env.VITE_PROXY_URL as string | undefined)?.replace(/\/$/, '') || '/api/check-bill';
+  const PROXY = 'https://wapda-bill-checker.malikshakoor7656.workers.dev';
   const targetUrl = currentDisco
     ? (cleanRef.length >= 10
-        ? `${proxyBase}?disco=${currentDisco.id}&refno=${cleanRef}`
+        ? `${PROXY}?disco=${currentDisco.id}&refno=${cleanRef}`
         : currentDisco.urlPrefix)
     : `https://bill.pitc.com.pk/${provider}bill`;
 
