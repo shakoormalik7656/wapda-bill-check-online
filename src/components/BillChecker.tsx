@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Loader2, Info, CheckCircle2, ArrowRight } from 'lucide-react';
 import { getAllDiscos } from '../content/discoData';
 
@@ -44,16 +44,12 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
 
   const currentDisco = getAllDiscos().find(d => d.id === provider);
   const cleanRef = refNumber.replace(/\D/g, "");
-  const formRef = useRef<HTMLFormElement>(null);
 
-  // Submit a hidden form directly to PITC from the user's browser.
-  // This is a plain HTML form POST (not XHR/fetch), so it is a browser
-  // navigation — no CORS restriction, no Vercel geo-block. The browser
-  // follows the 302 redirect and lands on the bill page.
-  const openBill = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (formRef.current) formRef.current.submit();
-  };
+  const targetUrl = currentDisco
+    ? (cleanRef.length >= 10
+        ? `${currentDisco.urlPrefix}/general?refno=${cleanRef}`
+        : currentDisco.urlPrefix)
+    : `https://bill.pitc.com.pk/${provider}bill`;
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -142,39 +138,14 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
                   <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                   Ready! Click below to view your duplicate bill.
                 </div>
-
-                {/* Hidden form: POSTs directly from the user's browser to PITC.
-                    Browser navigation follows the 302 → bill page. */}
-                {currentDisco && (
-                  <form
-                    ref={formRef}
-                    method="POST"
-                    action={currentDisco.urlPrefix}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ display: 'none' }}
-                  >
-                    <input type="hidden" name="__EVENTTARGET" value="" />
-                    <input type="hidden" name="__EVENTARGUMENT" value="" />
-                    <input type="hidden" name="__LASTFOCUS" value="" />
-                    <input type="hidden" name="__VIEWSTATE" value="" />
-                    <input type="hidden" name="__VIEWSTATEGENERATOR" value="2CDA38AB" />
-                    <input type="hidden" name="__EVENTVALIDATION" value="" />
-                    <input type="hidden" name="__RequestVerificationToken" value="" />
-                    <input type="hidden" name="rbSearchByList" value="refno" />
-                    <input type="hidden" name="searchTextBox" value={cleanRef} />
-                    <input type="hidden" name="ruCodeTextBox" value="" />
-                    <input type="hidden" name="btnSearch" value="Search" />
-                  </form>
-                )}
-
-                <button
-                  type="button"
-                  onClick={openBill}
+                <a
+                  href={targetUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-[14px] px-8 rounded-xl shadow-lg shadow-emerald-600/20 flex justify-center items-center gap-2 text-lg transition-all active:scale-[0.98]"
                 >
                   Click to get bill <ArrowRight className="w-5 h-5 ml-1" strokeWidth={2.5} />
-                </button>
+                </a>
               </div>
             )}
           </div>
