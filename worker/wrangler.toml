@@ -1,0 +1,8 @@
+name = "wapda-bill-checker"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Smart placement: Cloudflare picks the PoP closest to PITC's servers
+# (Pakistan / India), not closest to the user, so outbound latency is minimal.
+[placement]
+mode = "smart"
