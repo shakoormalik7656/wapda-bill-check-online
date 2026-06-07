@@ -12,6 +12,7 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
   const [isLoading, setIsLoading] = useState(false);
   const [showResultBtn, setShowResultBtn] = useState(false);
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
 
   // Whenever provider or refNumber changes, hide the result button so they can re-fetch
   useEffect(() => {
@@ -45,12 +46,9 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
   const currentDisco = getAllDiscos().find(d => d.id === provider);
   const cleanRef = refNumber.replace(/\D/g, "");
 
-  const PROXY = 'https://wapda-bill-checker.malikshakoor7656.workers.dev';
-  const targetUrl = currentDisco
-    ? (cleanRef.length >= 10
-        ? `${PROXY}?disco=${currentDisco.id}&refno=${cleanRef}`
-        : currentDisco.urlPrefix)
-    : `https://bill.pitc.com.pk/${provider}bill`;
+  // Opens the PITC search portal directly — the ref number is auto-copied
+  // to clipboard so the user can paste it in PITC's search field.
+  const targetUrl = currentDisco ? currentDisco.urlPrefix : `https://bill.pitc.com.pk/${provider}bill`;
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -135,18 +133,39 @@ export default function BillChecker({ initialDisco = "iesco" }: BillCheckerProps
               </button>
             ) : (
               <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 flex items-center justify-center gap-2 text-emerald-700 font-medium">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500" />
-                  Ready! Click below to view your duplicate bill.
+                {/* Ref number pill + copy button */}
+                <div className="bg-slate-100 rounded-xl px-4 py-3 flex items-center justify-between gap-3">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Your Reference No.</span>
+                    <span className="text-base font-mono font-bold text-slate-800 tracking-widest">{cleanRef}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(cleanRef).then(() => {
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
+                      });
+                    }}
+                    className="shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:border-emerald-400 hover:text-emerald-600 transition-colors"
+                  >
+                    {copied ? "Copied ✓" : "Copy"}
+                  </button>
                 </div>
+
                 <a
                   href={targetUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => navigator.clipboard.writeText(cleanRef).catch(() => {})}
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-[14px] px-8 rounded-xl shadow-lg shadow-emerald-600/20 flex justify-center items-center gap-2 text-lg transition-all active:scale-[0.98]"
                 >
-                  Click to get bill <ArrowRight className="w-5 h-5 ml-1" strokeWidth={2.5} />
+                  Open Bill Portal <ArrowRight className="w-5 h-5 ml-1" strokeWidth={2.5} />
                 </a>
+
+                <p className="text-center text-xs text-slate-500 font-medium">
+                  Your reference number is <strong>auto-copied</strong> — just paste it in the search field on the next page.
+                </p>
               </div>
             )}
           </div>
