@@ -1,9 +1,10 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import BillChecker from '../components/BillChecker';
-import { getAllDiscos } from '../content/discoData';
+import { getAllDiscos, getCurrentMonthYear } from '../content/discoData';
 import { Link } from 'wouter';
 import { useSEO } from '../hooks/useSEO';
+import { ArrowRight } from 'lucide-react';
 
 const WEB_APP_SCHEMA = {
   '@context': 'https://schema.org',
@@ -54,9 +55,10 @@ const FAQ_SCHEMA = {
 };
 
 export default function Home() {
+  const monthYear = getCurrentMonthYear();
   useSEO({
-    title: "Electricity Bill Online Check | WAPDA Duplicate Bills Pakistan",
-    description: "Check and download your duplicate WAPDA electricity bill online in Pakistan. Support for LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HAZECO, and HESCO 2026.",
+    title: `WAPDA Online Bill Check ${monthYear} | Electricity Duplicate Bill Pakistan`,
+    description: `Check and download your duplicate WAPDA electricity bill online for ${monthYear}. Free bill check by 14-digit reference number for LESCO, MEPCO, IESCO, FESCO, GEPCO, PESCO, HESCO, QESCO, SEPCO, TESCO & HAZECO.`,
     canonical: "https://www.wapdaonlinebillcheck.com/"
   });
 
@@ -78,6 +80,32 @@ export default function Home() {
               </p>
             </div>
             <BillChecker initialDisco="iesco" />
+          </div>
+        </section>
+
+        {/* All Providers directory grid — internal linking + crawl depth */}
+        <section className="max-w-4xl mx-auto w-full">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-2 text-center">
+            Select Your Electricity Provider (DISCO)
+          </h2>
+          <p className="text-slate-500 font-medium text-center mb-8">
+            Open your provider's page for a dedicated bill check, payment guide, and FAQs.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {getAllDiscos().map((disco) => (
+              <Link
+                key={disco.id}
+                href={`/${disco.id}`}
+                className="group bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-300 transition-all p-5 flex flex-col gap-1"
+              >
+                <span className="flex items-center justify-between text-lg font-extrabold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                  {disco.name}
+                  <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                </span>
+                <span className="text-xs text-slate-500 font-medium leading-snug">{disco.fullName}</span>
+                <span className="text-[11px] text-emerald-700 font-bold mt-1">{disco.cities[0]} Bill Check →</span>
+              </Link>
+            ))}
           </div>
         </section>
 

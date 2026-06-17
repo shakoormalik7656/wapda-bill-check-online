@@ -1,0 +1,38 @@
+name: Monthly rebuild
+
+# WHY: the site is pre-rendered to static HTML, so the "Month Year" in every
+# title / meta description / H1 / content is fixed at build time. This workflow
+# rebuilds the site on the 1st of each month so the static pages automatically
+# refresh to the new month (e.g. "IESCO Bill June 2026" -> "IESCO Bill July 2026")
+# WITHOUT any code change or manual deploy.
+#
+# ONE-TIME SETUP (required for this to work):
+#   1. Vercel Dashboard -> your project -> Settings -> Git -> Deploy Hooks.
+#      Create a hook (name: "monthly", branch: "main") and copy the URL.
+#   2. GitHub repo -> Settings -> Secrets and variables -> Actions ->
+#      New repository secret -> name: VERCEL_DEPLOY_HOOK_URL, value: <the hook URL>.
+# After that this runs automatically. You can also trigger it manually below.
+
+on:
+  schedule:
+    # 00:05 UTC on the 1st of every month. Pakistan (UTC+5) is already in the new
+    # month, and getCurrentMonthYear() computes in Asia/Karachi, so the new month
+    # is rendered correctly.
+    - cron: '5 0 1 * *'
+  workflow_dispatch: {}
+
+jobs:
+  trigger-vercel-rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel Deploy Hook
+        env:
+          HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK_URL" ]; then
+            echo "::error::Secret VERCEL_DEPLOY_HOOK_URL is not set. See setup notes in this file."
+            exit 1
+          fi
+          echo "Triggering monthly Vercel rebuild..."
+          curl -fsSL -X POST "$HOOK_URL"
+          echo "Done. Vercel will rebuild with the current month."

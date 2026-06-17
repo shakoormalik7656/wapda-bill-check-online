@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 
 interface SEOProps {
   title: string;
@@ -7,6 +7,33 @@ interface SEOProps {
   ogImage?: string;
   noindex?: boolean;
 }
+
+export interface ResolvedSEO {
+  title: string;
+  description: string;
+  robots: string;
+  canonical?: string;
+  image: string;
+}
+
+const SITE_URL = 'https://www.wapdaonlinebillcheck.com';
+
+/** Pure resolver shared by the client effect and the build-time prerenderer,
+ *  so the static HTML head always matches what the SPA would render. */
+export function resolveSEO(p: Partial<SEOProps>): ResolvedSEO {
+  return {
+    title: p.title ?? 'WAPDA Online Bill Check | Check Duplicate Electricity Bill Pakistan',
+    description: p.description ?? 'Check and download your duplicate WAPDA electricity bill online in Pakistan.',
+    robots: p.noindex ? 'noindex, nofollow' : 'index, follow',
+    canonical: p.canonical,
+    image: p.ogImage ?? `${SITE_URL}/og-image.jpg`,
+  };
+}
+
+/** During server prerender we provide a mutable sink via this context; each page's
+ *  useSEO() call writes its resolved props into it so the prerenderer can read them.
+ *  On the client there is no provider (value = null), so this is a no-op. */
+export const SEOContext = createContext<Partial<SEOProps> | null>(null);
 
 function setMeta(selector: string, attrName: string, attrValue: string, value: string) {
   let el = document.querySelector(selector);
@@ -19,8 +46,19 @@ function setMeta(selector: string, attrName: string, attrValue: string, value: s
 }
 
 export function useSEO({ title, description, canonical, ogImage, noindex }: SEOProps) {
+  // SSR capture: write resolved props into the prerender sink during render.
+  // No-op on the client (no provider). Safe to run during render for a one-shot.
+  const sink = useContext(SEOContext);
+  if (sink) {
+    sink.title = title;
+    sink.description = description;
+    sink.canonical = canonical;
+    sink.ogImage = ogImage;
+    sink.noindex = noindex;
+  }
+
   useEffect(() => {
-    const siteUrl = 'https://www.wapdaonlinebillcheck.com';
+    const siteUrl = SITE_URL;
     const defaultOgImage = `${siteUrl}/og-image.jpg`;
     const image = ogImage ?? defaultOgImage;
 

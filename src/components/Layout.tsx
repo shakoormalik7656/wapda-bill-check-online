@@ -34,7 +34,7 @@ const ORGANIZATION_SCHEMA = {
   },
   description: 'Independent utility portal for checking WAPDA electricity bills across all Pakistan DISCOs.',
   areaServed: 'PK',
-  knowsAbout: ['Electricity bills', 'WAPDA', 'LESCO', 'MEPCO', 'IESCO', 'FESCO', 'GEPCO', 'PESCO', 'HAZECO', 'HESCO'],
+  knowsAbout: ['Electricity bills', 'WAPDA', 'LESCO', 'MEPCO', 'IESCO', 'FESCO', 'GEPCO', 'PESCO', 'HAZECO', 'HESCO', 'SEPCO', 'QESCO', 'TESCO'],
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
